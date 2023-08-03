@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private LayerMask groundLayer;
 
     // Start is called before the first frame update
@@ -78,6 +79,17 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("Jumped", false);
             anim.SetTrigger("IsGrounded");
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Cheese"))
+        {
+            Debug.Log("Loser");
+            gameManager.gameOver.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
